@@ -1,30 +1,32 @@
 ## Raul Fonseca
 
-I build the layer underneath — engines, virtual machines, runtimes, and embedded
-clusters, mostly in C++.
+I write systems software, mostly C++. Engines, virtual machines, runtimes, and
+firmware for small distributed clusters.
 
-Most of these started as a question about how something works and ended as an
-implementation of it. The pattern I keep repeating is building the substrate
-first, then building the tools to test it.
+The projects below started as questions about how a layer works, and I answered
+them by building that layer and then building the tooling to test it.
 
 ### Selected work
 
-**[superposition](https://github.com/RaulFonseca002/superposition)** — a 3D engine
-written from scratch: its own entity-component-system with bitset signature
-matching, an OpenGL renderer, and Bullet physics. Entities are matched to systems
-by a single machine-word comparison.
+**[superposition](https://github.com/RaulFonseca002/superposition)**
+A 3D engine with its own entity-component-system, an OpenGL renderer, and Bullet
+physics. Each entity carries a 32-bit signature marking the components it holds,
+and systems keep the set of entities whose signature matches theirs, so a
+component being added updates one bitset and one set membership.
 
-**[esp32-distributed-worker](https://github.com/RaulFonseca002/esp32-distributed-worker)** —
-firmware for a self-organizing cluster of ESP32-C3 nodes that share
-image-processing work. Bully leader election, load balancing by queue depth, and
-a chunked-UDP frame protocol documented for the team building the camera node.
-Ships with host-side tools that simulate the cluster without hardware.
+**[esp32-distributed-worker](https://github.com/RaulFonseca002/esp32-distributed-worker)**
+Firmware for a cluster of ESP32-C3 nodes that share image-processing work. Nodes
+elect a leader by MAC-derived id, the leader routes incoming frames by comparing
+its own queue depth against each worker's heartbeat, and frames arrive over UDP
+in chunks. Ships with Python tools that stand in for the camera and for extra
+nodes, so the cluster can be exercised without the hardware.
 
-**[bytecode-vm](https://github.com/RaulFonseca002/bytecode-vm)** — a stack-based
-virtual machine with a loader, an IR stage, and a ten-case golden-file regression
-suite covering the failure modes: division by zero, stack overflow and underflow,
-signed overflow.
+**[bytecode-vm](https://github.com/RaulFonseca002/bytecode-vm)**
+A stack machine with a two-pass loader that resolves labels and variables into
+concrete addresses before execution. Ten programs under `TESTS/` run against
+committed expected output, covering division by zero, stack overflow and
+underflow, and signed 32-bit overflow.
 
-**[n8n-randomorg-node](https://github.com/RaulFonseca002/n8n-randomorg-node)** — a
-custom n8n node in TypeScript integrating the Random.org API, containerized with
-Docker and PostgreSQL. Built to someone else's spec.
+**[n8n-randomorg-node](https://github.com/RaulFonseca002/n8n-randomorg-node)**
+A custom n8n node in TypeScript that pulls random numbers from the Random.org
+API, running in Docker against PostgreSQL. Built to someone else's specification.
