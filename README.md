@@ -8,6 +8,9 @@ them by building that layer and then building the tooling to test it.
 
 ### Selected work
 
+**[LiquidLayer](https://github.com/RaulFonseca002/LiquidLayer)**
+A deterministic C++20 runtime for adaptive environments—designed to turn intent into verified, replayable state changes.
+
 **[superposition](https://github.com/RaulFonseca002/superposition)**
 A 3D engine with its own entity-component-system, an OpenGL renderer, and Bullet
 physics. Each entity carries a 32-bit signature marking the components it holds,
